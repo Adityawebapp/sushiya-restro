@@ -1,0 +1,203 @@
+import ResMainHeader from "../../ResMainHeader"
+import SideBar from "../../sidebar/SideBar"
+import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import {PathUrl,Token,UserId} from '../../../../config/Config'
+import React, { useState, useEffect } from "react";
+
+function BranchContent() {
+         // Token ,UserId and Url
+         const token = Token().token;
+         const res_id = UserId().user_id;
+         const url = PathUrl().urlData.development;
+
+
+    // For Random BranchId 
+
+ let [randomBranchId, setRandomBranchId] = useState(Math.floor(Math.random() * 99999999) + 10000000);   
+    // For Country List 
+    const [countries, setCountry] = useState([]);
+    // For City List 
+    const [cityList, setCityList] = useState([]);
+
+    useEffect(() => {
+        loadCountry();
+    }, []);
+
+
+    // For Branch Form Data 
+    let [branchData, setBranchData] = useState({
+        res_id : res_id,
+        branch_id: '',
+        pin_code: '',
+        locality: '',
+        country: '',
+        city: '',
+        end_time: '',
+        start_time: '',
+    });
+
+    const BranchHandleChange = e => {
+
+        let name = e.target.name;
+        let value = e.target.value;
+        branchData[name] = value;
+
+        setBranchData(branchData);
+
+    };
+
+    const loadCountry = async () => {
+        const data = await axios.get(`${url}/country`, { headers: { Authorization: 'Bearer ' + token } })
+            .then((response) => {
+                const data = response.data;
+                return data;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        setCountry(data);
+    }
+
+    const selectCity = async (e) => {
+        let name =e.target.name;
+        let id = e.target.value;
+        branchData[name] = id;
+        setBranchData(branchData);
+
+        const data = await axios.post(`${url}/getCity`, { country_id: id }, { headers: { Authorization: 'Bearer ' + token } })
+            .then((response) => {
+                const data = response.data;
+                return data;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+            setCityList(data);
+    }
+    const cityData = (e)=>{
+        let name =e.target.name;
+        let id = e.target.value;
+        branchData[name] = id;
+        setBranchData(branchData);
+    }
+
+    const branchFormData = (e)=>{
+        e.preventDefault();
+        branchData['branch_id'] = randomBranchId;
+        setBranchData(branchData);
+        console.log(branchData,"Branch Form Data");
+
+         axios.post(`${url}/branch`, branchData, { headers: { Authorization: 'Bearer ' + token } })
+            .then((response) => {
+                const data = response.data;
+                console.log(data,"this is from backend..")
+                return data;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    return (
+        <>
+            <ResMainHeader />
+            <div id="wrapper">
+                <SideBar />
+                <div className="container">
+                    <div className="row">
+                        <form onSubmit={branchFormData} >
+
+                            <div className="card col-md-12" >
+                                <NavLink to="/branchStaffDetails" className="fa fa-angle-left colorblack card-header bold text-decoration-none"  >  Add Branch</NavLink>
+                                <div className="card-body">
+                                    <div className="row">
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12">
+                                            <label className="colorblack bold">Branch Id:</label>
+                                            <input className="form-control" value={randomBranchId} onChange={BranchHandleChange} name="branch_id" type="text" disabled />
+
+                                            {/* <input type="text" className="from-control" /> */}
+                                        </div>
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12">
+                                            <label className="colorblack bold">Branch Name:</label>
+                                            <input className="form-control" onChange={BranchHandleChange} name="branch_name" type="text" />
+
+                                            {/* <input type="text" className="from-control" /> */}
+                                        </div>
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12 mt-3">
+                                            <label className="colorblack bold">Pin Code:</label>
+                                            <input className="form-control" onChange={BranchHandleChange} name="pin_code" type="text" />
+
+                                            {/* <input type="text" className="from-control" /> */}
+                                        </div>
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12 mt-3">
+                                            <label className="colorblack bold">Locality:</label>
+                                            <input className="form-control" onChange={BranchHandleChange} name="locality" type="text" />
+                                        </div>
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12 mt-3">
+                                            <label className="colorblack bold">Country:</label>
+                                            <select className="form-control" name="country" onChange={selectCity}>
+                                                <option>---Select Country---</option>
+                                                {
+                                                    countries.map((value) => (
+                                                        <option value={value.id}>{value.country}</option>
+                                                    ))
+
+                                                }
+                                            </select>
+                                        </div>
+
+
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12 mt-3">
+                                            <label className="colorblack bold">City   :</label>
+                                            {/* <input className="form-control" onChange={BranchHandleChange} name="city" type="text" /> */}
+                                            <select className="form-control" name="city" onChange={cityData}>
+                                                <option>---Select City---</option>
+                                            {
+                                                    cityList.map((value) => (
+                                                        <option value={value.id}>{value.city}</option>
+                                                    ))
+
+                                                }
+                                            </select>
+
+                                            {/* <input type="text" className="from-control" /> */}
+                                        </div>
+
+                                        <div className="col-md-6 col-lg-6 col-sm-12 mt-3">
+                                            <label className="colorblack bold">Start Time</label><br />
+                                            <input type="time" className="form-control" onChange={BranchHandleChange} name="start_time" />
+
+                                            {/* <input type="text" className="from-control" /> */}
+                                        </div>
+                                        <div className="col-md-6 col-lg-6 col-sm-12 mt-3">
+                                            <label className="colorblack bold">End Time</label><br />
+                                            <input type="time" className="form-control" onChange={BranchHandleChange} name="end_time" />
+
+                                            {/* <input type="text" className="from-control" /> */}
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div className="card-footer text-center">
+                                    {/* <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button> */}
+                                    <button type="submit" className="btn btn-primary ">Add Branch</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </>
+    )
+}
+
+export default BranchContent
