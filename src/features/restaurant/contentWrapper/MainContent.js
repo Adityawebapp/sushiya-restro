@@ -12,7 +12,7 @@ function MainContent() {
                 <div id="content">
 
                     {/* <!-- Topbar --> */}
-                    <ResMainHeader />
+                 
                     {/* <!-- End of Topbar --> */}
 
                     <PageContent />

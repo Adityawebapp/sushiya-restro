@@ -3,11 +3,11 @@ import Footer from "../../admin/footer/Footer";
 import { useState } from "react";
 import $ from "jquery";
 import axios from "axios";
-import { Switch, Table, Tabs, Button } from "antd";
+import { Switch, Table, Tabs, Button, Layout, PageHeader } from "antd";
 
 import { NavLink } from "react-router-dom";
 import { PathUrl, Token, UserId } from "../../../config/Config";
-
+import styles from "./Branch.module.css";
 const { TabPane } = Tabs;
 
 function BranchStaffContent() {
@@ -278,54 +278,29 @@ function BranchStaffContent() {
 
   // For Open Branch and StaffType Modal
 
-  const openStaffType = (e) => {
-    setBranch(false);
-    setStaffType(true);
-    setStaff(false);
-
-    e.target.classList.add("active");
-    $("#branch").removeClass("active");
-    $("#staff").removeClass("active");
-  };
-
-  const openBranch = (e) => {
-    setBranch(true);
-    setStaffType(false);
-    setStaff(false);
-
-    e.target.classList.add("active");
-    $("#staffType").removeClass("active");
-    $("#staff").removeClass("active");
-  };
-
-  const openStaff = (e) => {
-    setBranch(false);
-    setStaffType(false);
-    setStaff(true);
-
-    e.target.classList.add("active");
-    $("#branch").removeClass("active");
-    $("#staffType").removeClass("active");
-  };
 
   return (
     <>
-      {/* <!-- Content Wrapper --> */}
-      <div id="content-wrapper" className="d-flex flex-column">
-        <h3 className="ml-5 colorblack bold">Branch&Staff Management</h3>
-        {/* <!-- Main Content --> */}
+      <Layout className="site-layout">
+        <PageHeader
+          ghost={false}
+          onBack={() => window.history.back()}
+          title="Branch & Staff Management"
+        />
 
-        <Tabs onChange={callback} type="card" size="large">
+        <Tabs
+          onChange={callback}
+          type="card"
+          size="large"
+          centered
+          className="mt-4"
+        >
           <TabPane tab="Branch " key="1">
-            <NavLink to="branchDetail">
-              <Button
-                type="primary"
-                style={{ minWidth: "10%", float: "right",margin:"15px 0" }}
-              >
-                Add
-              </Button>
-            </NavLink>
-            <div className="card-body">
+          <div className={styles.floatRight}>
+            <NavLink to="/branchDetail">
+              <Button className={styles.AddButton} type="primary">Add</Button>
+            </NavLink></div>
+           
               <Table
                 dataSource={branchList}
                 columns={branchColumns}
@@ -335,9 +310,12 @@ function BranchStaffContent() {
                   pageSizeOptions: ["05", "10", "20", "30"],
                 }}
               />
-            </div>
+      
           </TabPane>
           <TabPane tab="Staff Type" key="2">
+         <div className={styles.floatRight}>  <NavLink to="/staffType">
+              <Button className={styles.AddButton} type="primary">Add</Button>
+            </NavLink></div> 
             <div>
               <Table
                 dataSource={staffTypeList}
@@ -351,6 +329,10 @@ function BranchStaffContent() {
             </div>
           </TabPane>
           <TabPane tab="Staff" key="3">
+          <div className={styles.floatRight}>
+            <NavLink to="/staff">
+              <Button className={styles.AddButton} type="primary">Add</Button>
+            </NavLink></div>
             <div>
               <Table
                 dataSource={staffList}
@@ -365,13 +347,13 @@ function BranchStaffContent() {
           </TabPane>
         </Tabs>
 
-        <div id="content">
+     {/*    <div id="content">
           <div class="row">
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header">
                   <h3 className="ml-5 colorblack bold">
-                    Branch&Staff Management
+                    Branch & Staff Management
                   </h3>
                   <div className="mt-4 text-center">
                     <div class="btn-group" style={{ minWidth: "50%" }}>
@@ -475,10 +457,9 @@ function BranchStaffContent() {
             </div>
           </div>
         </div>
-
         {/* <!-- End of Main Content --> */}
         <Footer />
-      </div>
+      </Layout>
     </>
   );
 }

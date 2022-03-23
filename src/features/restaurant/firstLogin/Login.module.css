@@ -1,0 +1,10 @@
+.MainLoginForm{
+    box-shadow: 7px 10px 29px -2px rgba(0,0,0,0.48);
+    background-color: transparent;
+    margin: 2rem;
+    padding: 2rem;
+}
+
+.floatRight{
+    float: right;
+}

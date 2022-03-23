@@ -22,6 +22,12 @@ import Offer from "./features/restaurant/offerManagement/Offer";
 import Payments from "./features/restaurant/payments/Payments";
 import RevenueGrowth from "./features/restaurant/RevenueGrowth/RevenueGrowth";
 import { Addoffer } from "./features/restaurant/offerManagement/addoffer/Addoffer";
+import { Cancelled } from "./features/restaurant/OrderManagement/liveorder/cancelled/Cancelled";
+import { Delayed } from "./features/restaurant/OrderManagement/liveorder/delayed/Delayed";
+import { Schedule } from "./features/restaurant/OrderManagement/liveorder/schedule/Schedule";
+import Profile from "./features/restaurant/Profile/Profile";
+import Subadmin from "./features/restaurant/SubAdmin/SubAdmin";
+
 
 function App() {
   return (
@@ -31,6 +37,7 @@ function App() {
       
 
           {/* For Restaurant Management  */}
+          <Route exact path="/" component={DashboardRestaurant} />
 
           <Route exact path="/restaurant" component={DashboardRestaurant} />
           <Route exact path="/firstLogin" component={FirstLogin} />
@@ -51,6 +58,7 @@ function App() {
             path="/branchStaffDetails"
             component={BranchStaffManagement}
           />
+          
           <Route exact path="/branchDetail" component={BranchContent} />
           <Route exact path="/staffType" component={StaffTypeContent} />
           <Route exact path="/staff" component={StaffContent} />
@@ -67,6 +75,12 @@ function App() {
           <Route exact path="/Order" component={Order} />
           <Route exact path="/Offer" component={Offer} />
           <Route exact path="/addoffer" component={Addoffer} />
+          <Route exact path="/cancelled" component={Cancelled} />
+          <Route exact path="/delayed" component={Delayed} />
+          <Route exact path="/schedule" component={Schedule} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/subadmin" component={Subadmin} />
+
         </Switch>
       </Router>
     </div>

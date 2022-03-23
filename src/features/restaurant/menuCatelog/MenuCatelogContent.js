@@ -8,6 +8,10 @@ import { MyListing } from "./mylisting/MyListing";
 import { PurchaseOrder } from "./purchaseOrder/PurchaseOrder";
 import Footer from "../../admin/footer/Footer";
 
+import { Layout } from 'antd';
+const {  Content } = Layout;
+
+
 const { TabPane } = Tabs;
 
 function MenuCatelogContent() {
@@ -21,6 +25,13 @@ function MenuCatelogContent() {
 
   return (
     <>
+
+    
+    <Layout className="site-layout" >
+
+     
+
+
       {/* <!-- Content Wrapper --> */}
       <div id="content-wrapper" className="d-flex flex-column">
         {/* <!-- Main Content --> */}
@@ -50,6 +61,11 @@ function MenuCatelogContent() {
 
         <Footer />
       </div>
+
+
+      
+     
+    </Layout>
     </>
   );
 }

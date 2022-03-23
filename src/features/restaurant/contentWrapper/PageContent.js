@@ -4,14 +4,17 @@ import React, { useEffect, useState } from "react";
 import { Token, PathUrl } from "../../../config/Config";
 import UserMap from './UserMap/UserMap'
 
+import { Layout } from 'antd';
+const { Content } = Layout;
+
+
+
 function PageContent() {
   const token = Token().token;
   const url = PathUrl().urlData.development;
 
   const [country, setCountry] = useState([]);
-  useEffect(() => {
-    loadCountry();
-  }, []);
+  
   const loadCountry = async () => {
     const data = await axios
       .get(`${url}/country`, { headers: { Authorization: "Bearer " + token } })
@@ -25,8 +28,21 @@ function PageContent() {
     setCountry(data);
   };
 
+  
+  useEffect(() => {
+    loadCountry();
+  }, []);
+
   return (
     <>
+    <Layout className="site-layout" >
+    
+     
+
+
+
+
+
       <div className="container-fluid">
         {/* <!-- Page Heading --> */}
         {/* <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -168,11 +184,11 @@ function PageContent() {
             </div>
             <div className="col-4">
               <select class="form-control" aria-label="Default select example">
-                <option selected>--Select Country Here---</option>
-                {country.map((value) => (
+                <option selected>choose option</option>
+               {/*    {country.map((value) => (
                   <option value={value.id}>{value.country}</option>
-                ))}
-              </select>
+                ))}  */ }
+              </select> 
             </div>
             <div className="col-4">
               <select class="form-control" aria-label="Default select example">
@@ -186,6 +202,11 @@ function PageContent() {
         {/* ================================================ */}
         <UserMap />
       </div>
+
+      
+     
+    
+    </Layout>
     </>
   );
 }

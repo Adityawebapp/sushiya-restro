@@ -6,6 +6,8 @@ import SideBar from "../../sidebar/SideBar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { UserId, Token } from "../../../../config/Config";
+import { Layout, PageHeader } from "antd";
+const { Content } = Layout;
 
 function DishContent() {
   const token = Token().token;
@@ -19,11 +21,10 @@ function DishContent() {
   const [menu, setMenu] = useState([]);
   const [catagory, setCatagory] = useState([]);
 
-  const [selectedFiles, setSelectedFiles] = useState([])
-  const [multipleImage, setMultipleImage] = useState([])
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [multipleImage, setMultipleImage] = useState([]);
 
   console.log(selectedVideo, "selectedVideo");
-
 
   // video upload
   const videoChange = (e) => {
@@ -62,16 +63,15 @@ function DishContent() {
     });
   };
 
-  
   const onSubmit = (data) => {
     let dd = new FormData();
     let files = multipleImage;
-    console.log(files)
+    console.log(files);
     for (let i = 0; i < files.length; i++) {
       dd.append("file[]", files[i]);
     }
     dd.append("video", selectedVideo);
-    dd.append('res_id',res_id);
+    dd.append("res_id", res_id);
     dd.append("name", data.name);
     dd.append("description", data.description);
     dd.append("price", data.price);
@@ -123,254 +123,268 @@ function DishContent() {
     categoryData();
   }, []);
 
- 
   console.log(multipleImage, "images");
 
   return (
     <>
-      <ResMainHeader />
-      <div id="wrapper">
+      <Layout hasSider>
         <SideBar />
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-          {/* <!-- Main Content --> */}
-          <div id="content">
-            <div className="card">
-              <NavLink
-                to="/menuCatelog"
-                className="fa fa-angle-left colorblack card-header bold text-decoration-none"
-              >
-                ADD Combo
-              </NavLink>
-
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-6">
-                      <div className="col-12 d-flex mt-4">
-                        <div className="col-3">
-                          <label>Item Name :</label>
-                        </div>
-                        <div className="col-9">
-                          <input
-                            className="form-control"
-                            type="text"
-                            placeholder="Enter Your"
-                            {...register("name", { required: true })}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-12 d-flex mt-4">
-                        <div className="col-3">
-                          <label>Veg / Non Veg :</label>
-                        </div>
-                        <div className="col-9">
-                          <div className="d-flex">
-                            <div class="form-check mr-5">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                value="veg"
-                                id="flexRadioDefault1"
-                                {...register("type", { required: true })}
-                              />
-                              <label
-                                class="form-check-label"
-                                HtmlFor="flexRadioDefault1"
-                              >
-                                Veg
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                value="non veg"
-                                id="flexRadioDefault2"
-                                {...register("type", { required: true })}
-                              />
-                              <label
-                                class="form-check-label"
-                                HtmlFor="flexRadioDefault2"
-                              >
-                                Non Veg
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <label>Item Description :</label>
-                      <br></br>
-                      <textarea className="form-control" rows="4"   {...register("description", { required: true })}></textarea>
-                    </div>
-                  </div>
-                  <h5 className="col-12">Item Pricing</h5>
-
+        <Layout className="site-layout">
+          <ResMainHeader />
+          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, textAlign: "center" }}
+            >
+            
+                <PageHeader
+                ghost={false}
+                  className="site-page-header"
+                  onBack={() => window.history.back()}
+                  title=" ADD COMBO"
+                  />
+                  
+                  <div className="bg-white">
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-12 d-flex">
-                        <div className="col-2">
-                          <label>Item Price :</label>
+                      <div className="col-6">
+                        <div className="col-12 d-flex mt-4">
+                          <div className="col-3">
+                            <label>Item Name :</label>
+                          </div>
+                          <div className="col-9">
+                            <input
+                              className="form-control"
+                              type="text"
+                              placeholder="Enter Your"
+                              {...register("name", { required: true })}
+                            />
+                          </div>
                         </div>
-                        <div className="col-4">
-                          <input
-                            className="form-control"
-                            type="number"
-                            {...register("price", { required: true })}
-                          />
-                        </div>
-                        <div className="col-2">
-                          <label>Packaging Charge :</label>
-                        </div>
-                        <div className="col-4">
-                          <input
-                            className="form-control"
-                            type="number"
-                            {...register("packaging_charge", { required: true })}
-                          />
-                        </div>
-                      </div>
-                   
-                      <div className="col-12 d-flex mt-3">
-                        <div className="col-2 pl-3">
-                          <label>Select Menu :</label>
-                        </div>
-                        <div className="col-4">
-                          <select className="form-control" {...register("menu")}>
-                            {menu.map((e) => (
-                              <option value={e.id}>{e.name}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-2 pl-3">
-                          <label>Category :</label>
-                        </div>
-                        <div className="col-4">
-                          <select
-                            className="form-control"
-                            {...register("category", {
-                              required: true,
-                            })}
-                          >
-                            {catagory.map((e) => (
-                              <option value={e.id}>{e.name}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                      <h5 className="col-12 mt-3">ADDONS</h5>
 
-                      <div className="col-12 d-flex mt-3">
-                        <div className="col-2 pl-3">
-                          <label>Purchase Measure :</label>
+                        <div className="col-12 d-flex mt-4">
+                          <div className="col-3">
+                            <label>Veg / Non Veg :</label>
+                          </div>
+                          <div className="col-9">
+                            <div className="d-flex">
+                              <div class="form-check mr-5">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  value="veg"
+                                  id="flexRadioDefault1"
+                                  {...register("type", { required: true })}
+                                />
+                                <label
+                                  class="form-check-label"
+                                  HtmlFor="flexRadioDefault1"
+                                >
+                                  Veg
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  value="non veg"
+                                  id="flexRadioDefault2"
+                                  {...register("type", { required: true })}
+                                />
+                                <label
+                                  class="form-check-label"
+                                  HtmlFor="flexRadioDefault2"
+                                >
+                                  Non Veg
+                                </label>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div className="col-4">
-                          <select
-                            className="form-control"
-                            {...register("purchase_measure", { required: true })}
-                          >
-                            <option selected disabled>
-                              please select
-                            </option>
-                            <option value="Milliliters">
-                              Milliliters (ml)
-                            </option>
-                            <option value="Liters">Liters</option>
-                            <option value="Deciliter">Deciliter</option>
-                            <option value="Liquid ounce"> Liquid ounce</option>
-                            <option value="Pounds">Pounds</option>
-                            <option value="Ounce">Ounce</option>
-                            <option value="Milligrams">Milligrams</option>
-                            <option value="Grams">Grams</option>
-                            <option value="Kilograms">Kilograms</option>
-                            <option value="Teaspoonful">Teaspoonful</option>
-                            <option value="Tablespoon">Tablespoon</option>
-                            <option value="Glass">Glass</option>
-                            <option value="Taza">Taza</option>
-                            <option value="Bowl">Bowl</option>
-                            <option value="Pinta">Pinta</option>
-                            <option value="Barrel">Barrel</option>
-                            <option value="Gill">Gill</option>
-                            <option value="Quartos">Quartos</option>
-                            <option value="Gallons">Gallons</option>
-                            <option value="Bag">Bag</option>
-                            <option value="Container">Container</option>
-                            <option value="Bottle">Bottle</option>
-                            <option value="Paperboard">Paperboard</option>
-                            <option value="Box">Box</option>
-                            <option value="Roll">Roll</option>
-                            <option value="Jar">Jar</option>
-                            <option value="Unit">Unit</option>
-                            <option value="Each">Each</option>
-                            <option value="Package">Package</option>
-                            <option value="Pinch">Pinch</option>
-                          </select>
-                        </div>
+                      </div>
+                      <div className="col-6">
+                        <label>Item Description :</label>
+                        <br></br>
+                        <textarea
+                          className="form-control"
+                          rows="4"
+                          {...register("description", { required: true })}
+                        ></textarea>
                       </div>
                     </div>
+                    <h5 className="col-12">Item Pricing</h5>
 
-                    <div className="row mt-5">
-                      <div className="col-6">
-                        <div className="col-12">
-                          <h5 className="mb-3">Upload video only</h5>
-                          <input
-                            accept="video/*"
-                            type="file"
-                           
-                            onChange={videoChange}
-                          />
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-12 d-flex">
+                          <div className="col-2">
+                            <label>Item Price :</label>
+                          </div>
+                          <div className="col-4">
+                            <input
+                              className="form-control"
+                              type="number"
+                              {...register("price", { required: true })}
+                            />
+                          </div>
+                          <div className="col-2">
+                            <label>Packaging Charge :</label>
+                          </div>
+                          <div className="col-4">
+                            <input
+                              className="form-control"
+                              type="number"
+                              {...register("packaging_charge", {
+                                required: true,
+                              })}
+                            />
+                          </div>
+                        </div>
 
-                          {selectedVideo && (
-                            <div className="col-md-12 col-lg-12 ">
-                              <button
-                                onClick={removeSelectedImage}
-                                className="btn btn-sm mr-4"
-                                style={{
-                                  float: "right",
-                                  color: "black",
-                                  fontWeight: "bolder",
-                                }}
-                              >
-                                X
-                              </button>
-                              <br />
-                              <video
-                                controls
-                                style={{
-                                  maxWidth: "75%",
-                                  minWidth: "55%",
-                                  maxHeight: "230px",
-                                }}
-                              >
-                                <source
-                                  src={URL.createObjectURL(selectedVideo)}
-                                ></source>
-                              </video>
-                            </div>
-                          )}
+                        <div className="col-12 d-flex mt-3">
+                          <div className="col-2 pl-3">
+                            <label>Select Menu :</label>
+                          </div>
+                          <div className="col-4">
+                            <select
+                              className="form-control"
+                              {...register("menu")}
+                            >
+                              {menu.map((e) => (
+                                <option value={e.id}>{e.name}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="col-2 pl-3">
+                            <label>Category :</label>
+                          </div>
+                          <div className="col-4">
+                            <select
+                              className="form-control"
+                              {...register("category", {
+                                required: true,
+                              })}
+                            >
+                              {catagory.map((e) => (
+                                <option value={e.id}>{e.name}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <h5 className="col-12 mt-3">ADDONS</h5>
+
+                        <div className="col-12 d-flex mt-3">
+                          <div className="col-2 pl-3">
+                            <label>Purchase Measure :</label>
+                          </div>
+                          <div className="col-4">
+                            <select
+                              className="form-control"
+                              {...register("purchase_measure", {
+                                required: true,
+                              })}
+                            >
+                              <option selected disabled>
+                                please select
+                              </option>
+                              <option value="Milliliters">
+                                Milliliters (ml)
+                              </option>
+                              <option value="Liters">Liters</option>
+                              <option value="Deciliter">Deciliter</option>
+                              <option value="Liquid ounce">
+                                {" "}
+                                Liquid ounce
+                              </option>
+                              <option value="Pounds">Pounds</option>
+                              <option value="Ounce">Ounce</option>
+                              <option value="Milligrams">Milligrams</option>
+                              <option value="Grams">Grams</option>
+                              <option value="Kilograms">Kilograms</option>
+                              <option value="Teaspoonful">Teaspoonful</option>
+                              <option value="Tablespoon">Tablespoon</option>
+                              <option value="Glass">Glass</option>
+                              <option value="Taza">Taza</option>
+                              <option value="Bowl">Bowl</option>
+                              <option value="Pinta">Pinta</option>
+                              <option value="Barrel">Barrel</option>
+                              <option value="Gill">Gill</option>
+                              <option value="Quartos">Quartos</option>
+                              <option value="Gallons">Gallons</option>
+                              <option value="Bag">Bag</option>
+                              <option value="Container">Container</option>
+                              <option value="Bottle">Bottle</option>
+                              <option value="Paperboard">Paperboard</option>
+                              <option value="Box">Box</option>
+                              <option value="Roll">Roll</option>
+                              <option value="Jar">Jar</option>
+                              <option value="Unit">Unit</option>
+                              <option value="Each">Each</option>
+                              <option value="Package">Package</option>
+                              <option value="Pinch">Pinch</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
-                      <div className="col-6">
-                        <div className="col-12">
-                          <h5 className="mb-3">Upload Images Only</h5>
-                        </div>
-                        <div className="col-12">
-                          <input
-                            type="file"
-                            name="file[]"
-                            id="file"
-                            multiple
-                            onChange={handleImageChangeDemo}
-                          />
-                          <div className="result">
-                            {renderPhotos(selectedFiles)}
+
+                      <div className="row mt-5">
+                        <div className="col-6">
+                          <div className="col-12">
+                            <h5 className="mb-3">Upload video only</h5>
+                            <input
+                              accept="video/*"
+                              type="file"
+                              onChange={videoChange}
+                            />
+
+                            {selectedVideo && (
+                              <div className="col-md-12 col-lg-12 ">
+                                <button
+                                  onClick={removeSelectedImage}
+                                  className="btn btn-sm mr-4"
+                                  style={{
+                                    float: "right",
+                                    color: "black",
+                                    fontWeight: "bolder",
+                                  }}
+                                >
+                                  X
+                                </button>
+                                <br />
+                                <video
+                                  controls
+                                  style={{
+                                    maxWidth: "75%",
+                                    minWidth: "55%",
+                                    maxHeight: "230px",
+                                  }}
+                                >
+                                  <source
+                                    src={URL.createObjectURL(selectedVideo)}
+                                  ></source>
+                                </video>
+                              </div>
+                            )}
                           </div>
+                        </div>
+                        <div className="col-6">
+                          <div className="col-12">
+                            <h5 className="mb-3">Upload Images Only</h5>
+                          </div>
+                          <div className="col-12">
+                            <input
+                              type="file"
+                              name="file[]"
+                              id="file"
+                              multiple
+                              onChange={handleImageChangeDemo}
+                            />
+                            <div className="result">
+                              {renderPhotos(selectedFiles)}
+                            </div>
 
-
-                          {/* <ImgCrop rotate>
+                            {/* <ImgCrop rotate>
                            <Upload
                              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
@@ -389,34 +403,33 @@ function DishContent() {
                              })}
                          />
                        </ImgCrop> */}
+                          </div>
+                        </div>
+                      </div>
 
-
+                      <div className="row mt-5">
+                        <div className="col-12" style={{ textAlign: "center" }}>
+                          <button className="btn btn-danger " type="submit">
+                            SAVE & SUBMIT FOR APPROVAL
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => reset()}
+                            className="btn btn-secondary"
+                          >
+                            Reset
+                          </button>
                         </div>
                       </div>
                     </div>
-
-                    <div className="row mt-5">
-                      <div className="col-12" style={{ textAlign: "center" }}>
-                        <button className="btn btn-danger " type="submit">
-                          SAVE & SUBMIT FOR APPROVAL
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => reset()}
-                          className="btn btn-secondary"
-                        >
-                          Reset
-                        </button>
-                      </div>
-                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
-          </div>
-          <Footer />
-        </div>
-      </div>
+            <Footer />
+          </Content>
+        </Layout>
+      </Layout>
     </>
   );
 }

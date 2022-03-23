@@ -1,12 +1,13 @@
 import React from "react";
-import { Row, Col, Button, Space } from "antd";
+import { Row, Col, Button } from "antd";
 import { BsArrowRight } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
-
 const imageSize = { fontSize: "2rem" };
 export const All = () => {
   return (
     <>
+   
+  
       <div className="schedules">
         <div className="bg-success py-4">
           <Row align="center">
@@ -50,6 +51,9 @@ export const All = () => {
       </div>
 
       {/*second */}
+
+    
+
     </>
   );
 };

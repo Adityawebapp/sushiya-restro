@@ -3,13 +3,16 @@ import { Avatar } from "antd";
 import { Row, Col, Button, Image, Space, Divider, Modal } from "antd";
 import { useState } from "react";
 
+
+
 export const Ongoing = () => {
   const [visible, setVisible] = useState(false);
   return (
     <>
+  
+  
       <Row className="my-3">
         <Col span={12}>
-          {" "}
           <h6> Name :</h6>
         </Col>
       </Row>
@@ -101,6 +104,10 @@ export const Ongoing = () => {
         <p>some contents...</p>
         <p>some contents...</p>
       </Modal>
+
+
+     
+     
     </>
   );
 };

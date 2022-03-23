@@ -1,25 +1,24 @@
 import React from "react";
-import SideBar from "./sidebar/SideBar";
-import Maincontent from "./contentWrapper/MainContent";
-// import Googlemap from '../../map/GoogleMap'
 import { Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import ResMainHeader from "./ResMainHeader";
-import PageContent from "./contentWrapper/PageContent";
+import SideBar from "../sidebar/SideBar";
+import ResMainHeader from "../ResMainHeader";
 
-function DashboardRestaurant() {
+
+
+function SubAdmin() {
   return (
     <>
       <Layout hasSider>
         <SideBar />
-        <Layout className="site-layout" >
+        <Layout className="site-layout" style={{ marginLeft: 100 }}>
           <ResMainHeader />
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <div
               className="site-layout-background"
               style={{ padding: 24, textAlign: "center" }}
             >
-              <PageContent />
+              <h3>subadmin</h3>
             </div>
           </Content>
         </Layout>
@@ -28,4 +27,4 @@ function DashboardRestaurant() {
   );
 }
 
-export default DashboardRestaurant;
+export default SubAdmin;

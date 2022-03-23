@@ -79,7 +79,7 @@ export const MyListing = () => {
   return (
     <>
       <div className="row mt-2">
-        <div className="col-md-6 ">
+        <div className="col-md-6" style={{textAlign:"start"}}>
           {/* <div class="btn-group " style={{ minWidth: '30%' }}>
                                                     
 

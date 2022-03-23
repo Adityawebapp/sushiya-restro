@@ -1,13 +1,12 @@
 import React from "react";
-import SideBar from "./sidebar/SideBar";
-import Maincontent from "./contentWrapper/MainContent";
-// import Googlemap from '../../map/GoogleMap'
 import { Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import ResMainHeader from "./ResMainHeader";
-import PageContent from "./contentWrapper/PageContent";
+import SideBar from "../sidebar/SideBar";
+import ResMainHeader from "../ResMainHeader";
 
-function DashboardRestaurant() {
+
+
+function Profile() {
   return (
     <>
       <Layout hasSider>
@@ -19,7 +18,7 @@ function DashboardRestaurant() {
               className="site-layout-background"
               style={{ padding: 24, textAlign: "center" }}
             >
-              <PageContent />
+              <h3>Profile</h3>
             </div>
           </Content>
         </Layout>
@@ -28,4 +27,4 @@ function DashboardRestaurant() {
   );
 }
 
-export default DashboardRestaurant;
+export default Profile;

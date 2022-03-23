@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root{
+  --mainColor:"#ffff";
+  --whiteColor:"#fffff";
+  --margin-top:"2rem";
+}
+
+.ant-layout-content,.ant-layout{
+  height: 100%!important;
+}

@@ -1,22 +1,12 @@
-import {
-  Row,
-  Col,
-  Radio,
-  Input,
-  DatePicker,
-  Button,
-  Form,
-  Upload,
-} from "antd";
+import { Row, Col, Radio, Form, PageHeader } from "antd";
 import React, { useState } from "react";
 import ResMainHeader from "../../ResMainHeader";
 import SideBar from "../../sidebar/SideBar";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 import Givediscount from "./addofferpage/Givediscount";
 import Spendearn from "./addofferpage/Spendearn";
-
-const { RangePicker } = DatePicker;
-
+import { DeliveryBoy } from "./addofferpage/DeliveryBoy";
+import { Layout } from "antd";
+const { Content } = Layout;
 
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
@@ -33,173 +23,93 @@ const normFile = (e) => {
 };
 
 export const Addoffer = () => {
-  // const [DeveleryBoy, setDeveleryBoy] = useState(false);
-  // const [giveOffer, setGiveOffer] = useState(false);
-  // const [discount, setDiscount] = useState();
-  
-  
+  const [value, setValue] = React.useState(3);
+
   const [form] = Form.useForm();
 
-  const onReset = () => {
-    form.resetFields();
-  };
-
- 
   const onFinish = (fieldsValue) => {
     console.log("Received values of form: ", fieldsValue);
   };
 
-  // const spenearnFun = ()=>{
-  
-  // }
-
-  // const giveDiscount=()=>{
-   
-  // }
-
-  // const DeliveryBooy=()=>{
-
-  // }
+  const onChangeRadio = (e) => {
+    setValue(e.target.value);
+  };
 
   return (
     <>
-      <ResMainHeader />
-      <div id="wrapper">
+      <Layout hasSider>
         <SideBar />
 
-        <div id="content-wrapper">
-        <div className="border bg-light shadow py-5">
-          <Row >
-            <Col span={18}>
-              <Form
-                form={form}
-                name="basic"
-                labelCol={{
-                  span: 8,
-                }}
-                wrapperCol={{
-                  span: 16,
-                }}
-                initialValues={{
-                  remember: true,
-                }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-              >
-                <Form.Item
-                  label="Discount Type"
-                  name="item"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your item!",
-                    },
-                  ]}
-                >
-                  <Radio.Group>
-                    <Radio value="1">Delivery boy</Radio>
-                    <Radio value="2" >Spend Earn</Radio>
-                    <Radio value="3">Give Discound
-                    </Radio>
-                  </Radio.Group>
-                </Form.Item>
+        <Layout className="site-layout">
+          <ResMainHeader />
+          {/* main code start    */}
+          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+            <div className="site-layout-background" style={{ padding: 24 }}>
+              <PageHeader
+                ghost={false}
+                onBack={() => window.history.back()}
+                title="Create Offer"
+              />
 
-                <Form.Item
-                  label="Discount Type"
-                  name="discount"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your username!",
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+              <div className="my-5">
+                <Row>
+                  <Col span={18}>
+                    <Form
+                      form={form}
+                      name="basic"
+                      labelCol={{
+                        span: 8,
+                      }}
+                      wrapperCol={{
+                        span: 16,
+                      }}
+                      initialValues={{
+                        remember: true,
+                      }}
+                      onFinish={onFinish}
+                      onFinishFailed={onFinishFailed}
+                      autoComplete="off"
+                    >
+                      <Form.Item
+                        label="Discount Type"
+                        name="item"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your item!",
+                          },
+                        ]}
+                      >
+                        <Radio.Group
+                          onChange={onChangeRadio}
+                          checked={true}
+                          value={value}
+                        >
+                          <Radio value={1} >Delivery boy</Radio>
+                          <Radio value={2}>Spend Earn</Radio>
+                          <Radio value={3}>Give Discound</Radio>
+                        </Radio.Group>
+                      </Form.Item>
+                    </Form>
+                  </Col>
+                </Row>
 
-                <Form.Item
-                  label="Coupen code"
-                  name="code"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your code!",
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+                {/* =========  2nd section  ================== 
 
-                <Form.Item
-                  label="title aad"
-                  name="title"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your title!",
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item name="range-picker" label="RangePicker">
-                  <RangePicker format="YYYY-MM-DD " />
-                </Form.Item>
+              {DeveleryBoy && <DeliveryBoy />}
+              {spendEarn && <Spendearn />}
+              {giveOffer && <Givediscount />}
 
-                <Form.Item
-                  name="upload"
-                  label="Upload"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  extra="longgggggggggggggggggggggggggggggggggg"
-                >
-                  <Upload name="logo" action="/upload.do" listType="picture">
-                    <Button>Click to upload</Button>
-                  </Upload>
-                </Form.Item>
-
-                <Form.Item
-                  name="remember"
-                  valuePropName="checked"
-                  wrapperCol={{
-                    offset: 8,
-                    span: 16,
-                  }}
-                >
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item
-                  wrapperCol={{
-                    offset: 8,
-                    span: 16,
-                  }}
-                >
-                  <Button type="primary" htmlType="submit">
-                    Save & Submit For Approval
-                  </Button>
-                  <Button htmlType="button" onClick={onReset}>
-                    Reset
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Col>
-          </Row>
-
-          {/* =========  2nd section  ==================  */}
-
-      
-            <Spendearn/> 
- 
-           
-           <Givediscount/> 
-
-         
-          
-          </div>
-        </div>
-      </div>
+               */}
+                {value === 1 ? <DeliveryBoy /> : null}
+                {value === 2 ? <Spendearn /> : null}
+                {value === 3 ? <Givediscount /> : null}
+              </div>
+            </div>
+            {/* end main code */}
+          </Content>
+        </Layout>
+      </Layout>
     </>
   );
 };

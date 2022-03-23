@@ -8,6 +8,7 @@ import {
   Input,
   // Upload,
   DatePicker,
+  PageHeader,
 } from "antd";
 
 const Givediscount = () => {
@@ -30,6 +31,9 @@ const Givediscount = () => {
   return (
     <>
     
+
+
+
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 15 }}

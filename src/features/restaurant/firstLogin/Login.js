@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { PathUrl, Token } from "../../../config/Config";
 import { useHistory } from "react-router";
+import { MyNewLogin } from "./MyNewLogin";
 
 function Login() {
   const token = Token().token;
@@ -137,6 +138,15 @@ function Login() {
           </div>
         </div>
       </div>
+ 
+
+    { /* new desig layout for myself */}
+
+
+    <MyNewLogin/>
+
+
+
     </>
   );
 }
